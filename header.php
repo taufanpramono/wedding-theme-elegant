@@ -14,6 +14,7 @@
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+<?php wew_render_preloader(); ?>
 <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'wedding-elegant-wedding' ); ?></a>
 <header class="wew-site-header" id="masthead">
 	<div class="wew-header-inner">
@@ -52,4 +53,3 @@
 	</div>
 </header>
 <main id="primary" class="site-main">
-

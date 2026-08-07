@@ -2,6 +2,10 @@
 
 WordPress wedding invitation theme with a one-page elegant layout, Customizer fields, installable ZIP build script, and GitHub update support.
 
+## Preloader and Music
+
+The theme includes a soft wedding preloader with the names from Customizer and a `Buka Undangan` button. Add a song URL in Appearance > Customize > Wedding Details > URL Lagu Pernikahan. The song starts after the visitor clicks `Buka Undangan`, which keeps it compatible with browser autoplay rules.
+
 ## Build ZIP
 
 From the WordPress project root:
@@ -43,4 +47,3 @@ define( 'WEW_GITHUB_TOKEN', 'github_pat_xxx' );
 ```
 
 Public repositories do not need a token.
-

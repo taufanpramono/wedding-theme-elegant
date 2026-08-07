@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function wew_defaults() {
 	return array(
 		'bride_name'    => 'Isti',
-		'groom_name'    => 'Pasangan',
+		'groom_name'    => 'Bagus',
 		'event_intro'   => 'Dengan penuh sukacita, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada hari bahagia kami.',
 		'event_date'    => '2026-12-12T09:00',
 		'venue_name'    => 'Nama Venue',
@@ -25,6 +25,8 @@ function wew_defaults() {
 		'maps_url'      => '',
 		'rsvp_url'      => '#rsvp',
 		'whatsapp'      => '',
+		'music_url'     => '',
+		'preloader'     => '1',
 		'hashtag'       => '#WeddingElegant',
 		'story_title'   => 'Dua hati, satu langkah',
 		'story_body'    => 'Setiap perjalanan punya cara indahnya sendiri untuk mempertemukan dua hati. Hari ini kami memulai babak baru bersama keluarga dan orang-orang terkasih.',
@@ -126,6 +128,16 @@ function wew_customize_register( $wp_customize ) {
 			'type'     => 'text',
 			'sanitize' => 'sanitize_text_field',
 		),
+		'music_url'     => array(
+			'label'    => __( 'URL Lagu Pernikahan', 'wedding-elegant-wedding' ),
+			'type'     => 'url',
+			'sanitize' => 'esc_url_raw',
+		),
+		'preloader'     => array(
+			'label'    => __( 'Tampilkan Preloader', 'wedding-elegant-wedding' ),
+			'type'     => 'checkbox',
+			'sanitize' => 'wew_sanitize_checkbox',
+		),
 		'hashtag'       => array(
 			'label'    => __( 'Hashtag', 'wedding-elegant-wedding' ),
 			'type'     => 'text',
@@ -165,3 +177,12 @@ function wew_customize_register( $wp_customize ) {
 	}
 }
 
+/**
+ * Sanitize checkbox values.
+ *
+ * @param mixed $checked Raw value.
+ * @return string
+ */
+function wew_sanitize_checkbox( $checked ) {
+	return ! empty( $checked ) ? '1' : '0';
+}

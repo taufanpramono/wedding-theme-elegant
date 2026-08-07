@@ -113,3 +113,52 @@ function wew_post_thumbnail( $size = 'large' ) {
 	echo '<div class="wew-thumb-placeholder" aria-hidden="true"></div>';
 }
 
+add_filter( 'body_class', 'wew_body_classes' );
+/**
+ * Add body classes used by interactive wedding elements.
+ *
+ * @param string[] $classes Body classes.
+ * @return string[]
+ */
+function wew_body_classes( $classes ) {
+	if ( '1' === wew_get_option( 'preloader' ) ) {
+		$classes[] = 'wew-preloader-visible';
+	}
+
+	return $classes;
+}
+
+/**
+ * Render the wedding invitation preloader.
+ */
+function wew_render_preloader() {
+	if ( '1' !== wew_get_option( 'preloader' ) ) {
+		return;
+	}
+
+	$names     = wew_get_option( 'bride_name' ) . ' & ' . wew_get_option( 'groom_name' );
+	$music_url = wew_get_option( 'music_url' );
+	?>
+	<div class="wew-preloader" data-wew-preloader role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Buka undangan pernikahan', 'wedding-elegant-wedding' ); ?>">
+		<div class="wew-preloader-card">
+			<div class="wew-preloader-ornament" aria-hidden="true">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<p class="wew-kicker"><?php esc_html_e( 'Wedding Invitation', 'wedding-elegant-wedding' ); ?></p>
+			<h2><?php echo esc_html( $names ); ?></h2>
+			<p><?php esc_html_e( 'Satu hari indah, satu cerita baru, dan doa hangat dari orang-orang tersayang.', 'wedding-elegant-wedding' ); ?></p>
+			<button class="wew-open-invitation" type="button" data-wew-open-invitation>
+				<?php esc_html_e( 'Buka Undangan', 'wedding-elegant-wedding' ); ?>
+			</button>
+		</div>
+	</div>
+	<?php if ( ! empty( $music_url ) ) : ?>
+		<audio data-wew-audio src="<?php echo esc_url( $music_url ); ?>" preload="auto" loop></audio>
+		<button class="wew-music-toggle" type="button" data-wew-music-toggle hidden aria-pressed="true">
+			<span data-wew-music-label><?php esc_html_e( 'Pause Musik', 'wedding-elegant-wedding' ); ?></span>
+		</button>
+	<?php endif; ?>
+	<?php
+}

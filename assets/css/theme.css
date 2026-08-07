@@ -34,6 +34,10 @@ body.wew-menu-open {
   overflow: hidden;
 }
 
+body.wew-preloader-visible {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
 }
@@ -292,6 +296,149 @@ img {
   background: rgba(255, 255, 255, 0.78);
   border-color: var(--wew-line);
   color: var(--wew-sage-dark);
+}
+
+.wew-preloader {
+  align-items: center;
+  background:
+    linear-gradient(180deg, rgba(251, 250, 247, 0.96), rgba(251, 250, 247, 0.82)),
+    url("../images/wedding-hero.png") center / cover;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: fixed;
+  z-index: 9999;
+}
+
+.wew-preloader::before,
+.wew-preloader::after {
+  background: rgba(215, 180, 106, 0.18);
+  border: 1px solid rgba(215, 180, 106, 0.28);
+  border-radius: 999px;
+  content: "";
+  height: 210px;
+  position: absolute;
+  width: 210px;
+}
+
+.wew-preloader::before {
+  left: max(18px, 8vw);
+  top: max(24px, 10vh);
+}
+
+.wew-preloader::after {
+  bottom: max(24px, 8vh);
+  right: max(18px, 8vw);
+}
+
+.wew-preloader.is-opening {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(1.02);
+  transition: opacity 620ms ease, transform 720ms ease;
+}
+
+.wew-preloader-card {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  box-shadow: 0 26px 90px rgba(36, 49, 41, 0.16);
+  max-width: 560px;
+  padding: clamp(32px, 7vw, 58px);
+  position: relative;
+  text-align: center;
+  width: min(100%, 560px);
+  z-index: 1;
+}
+
+.wew-preloader-card::before {
+  border: 1px solid rgba(215, 180, 106, 0.42);
+  border-radius: 8px;
+  content: "";
+  inset: 12px;
+  pointer-events: none;
+  position: absolute;
+}
+
+.wew-preloader-ornament {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.wew-preloader-ornament span {
+  background: var(--wew-rose);
+  border-radius: 999px 999px 999px 0;
+  display: block;
+  height: 14px;
+  opacity: 0.84;
+  transform: rotate(-45deg);
+  width: 14px;
+}
+
+.wew-preloader-ornament span:nth-child(2) {
+  background: var(--wew-champagne);
+  height: 18px;
+  width: 18px;
+}
+
+.wew-preloader-ornament span:nth-child(3) {
+  background: var(--wew-sage);
+}
+
+.wew-preloader h2 {
+  font-family: var(--wew-serif);
+  font-size: clamp(3rem, 8vw, 5.7rem);
+  font-weight: 500;
+  line-height: 0.98;
+  margin: 0;
+}
+
+.wew-preloader p:not(.wew-kicker) {
+  color: var(--wew-muted);
+  margin: 18px auto 0;
+  max-width: 420px;
+}
+
+.wew-open-invitation {
+  background: var(--wew-sage-dark);
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 18px 38px rgba(49, 68, 56, 0.22);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  margin-top: 28px;
+  min-height: 48px;
+  padding: 12px 24px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.wew-open-invitation:hover,
+.wew-open-invitation:focus-visible {
+  box-shadow: 0 22px 44px rgba(49, 68, 56, 0.28);
+  outline: 0;
+  transform: translateY(-1px);
+}
+
+.wew-music-toggle {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--wew-line);
+  border-radius: 8px;
+  bottom: 18px;
+  box-shadow: 0 12px 30px rgba(36, 49, 41, 0.14);
+  color: var(--wew-sage-dark);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 800;
+  min-height: 42px;
+  padding: 9px 13px;
+  position: fixed;
+  right: 18px;
+  z-index: 60;
 }
 
 .wew-countdown {
@@ -753,4 +900,3 @@ input[type="submit"] {
     min-height: 0;
   }
 }
-

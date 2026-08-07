@@ -1,4 +1,70 @@
 (function () {
+  var preloader = document.querySelector("[data-wew-preloader]");
+  var openInvitation = document.querySelector("[data-wew-open-invitation]");
+  var audio = document.querySelector("[data-wew-audio]");
+  var musicToggle = document.querySelector("[data-wew-music-toggle]");
+  var musicLabel = document.querySelector("[data-wew-music-label]");
+
+  function playWeddingMusic() {
+    if (!audio) {
+      return;
+    }
+
+    audio.volume = 0.72;
+    var playPromise = audio.play();
+
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(function () {
+        if (musicLabel) {
+          musicLabel.textContent = "Play Musik";
+        }
+        if (musicToggle) {
+          musicToggle.setAttribute("aria-pressed", "false");
+        }
+      });
+    }
+  }
+
+  function closePreloader() {
+    if (!preloader) {
+      playWeddingMusic();
+      return;
+    }
+
+    playWeddingMusic();
+    preloader.classList.add("is-opening");
+    document.body.classList.remove("wew-preloader-visible");
+
+    window.setTimeout(function () {
+      preloader.remove();
+      if (musicToggle && audio) {
+        musicToggle.hidden = false;
+      }
+    }, 720);
+  }
+
+  if (openInvitation) {
+    openInvitation.addEventListener("click", closePreloader);
+  }
+
+  if (musicToggle && audio) {
+    musicToggle.addEventListener("click", function () {
+      if (audio.paused) {
+        playWeddingMusic();
+        musicToggle.setAttribute("aria-pressed", "true");
+        if (musicLabel) {
+          musicLabel.textContent = "Pause Musik";
+        }
+      } else {
+        audio.pause();
+        musicToggle.setAttribute("aria-pressed", "false");
+        if (musicLabel) {
+          musicLabel.textContent = "Play Musik";
+        }
+      }
+    });
+  }
+
   var navToggle = document.querySelector(".wew-nav-toggle");
   var nav = document.querySelector(".wew-navigation");
 
@@ -62,4 +128,3 @@
   updateCountdown();
   window.setInterval(updateCountdown, 1000);
 })();
-
