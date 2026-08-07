@@ -136,22 +136,51 @@ function wew_render_preloader() {
 		return;
 	}
 
-	$names     = wew_get_option( 'bride_name' ) . ' & ' . wew_get_option( 'groom_name' );
-	$music_url = wew_get_option( 'music_url' );
+	$names      = wew_get_option( 'groom_name' ) . ' & ' . wew_get_option( 'bride_name' );
+	$music_url  = wew_get_option( 'music_url' );
+	$guest_name = '';
+
+	if ( '' === $music_url ) {
+		$music_files = glob( get_template_directory() . '/assets/music/*.{mp3,m4a,ogg,wav}', GLOB_BRACE );
+
+		if ( ! empty( $music_files ) ) {
+			$music_url = get_template_directory_uri() . '/assets/music/' . rawurlencode( basename( $music_files[0] ) );
+		}
+	}
+
+	if ( isset( $_GET['to'] ) ) {
+		$guest_name = sanitize_text_field( wp_unslash( $_GET['to'] ) );
+	} elseif ( isset( $_GET['kepada'] ) ) {
+		$guest_name = sanitize_text_field( wp_unslash( $_GET['kepada'] ) );
+	}
+
+	if ( '' === $guest_name ) {
+		$guest_name = __( '(Nama Penerima Undangan)', 'wedding-elegant-wedding' );
+	}
 	?>
 	<div class="wew-preloader" data-wew-preloader role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Buka undangan pernikahan', 'wedding-elegant-wedding' ); ?>">
-		<div class="wew-preloader-card">
-			<div class="wew-preloader-ornament" aria-hidden="true">
-				<span></span>
-				<span></span>
-				<span></span>
+		<div class="wew-preloader-stage">
+			<div class="wew-preloader-envelope" aria-hidden="true">
+				<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/1_preloader/envelopes.png' ); ?>" alt="">
+				<p>
+					<span><?php esc_html_e( 'Still', 'wedding-elegant-wedding' ); ?></span>
+					<span><?php esc_html_e( 'We Become', 'wedding-elegant-wedding' ); ?></span>
+					<em><strong>8</strong> &ldquo;<?php esc_html_e( 'Eight', 'wedding-elegant-wedding' ); ?>&rdquo; <?php esc_html_e( 'to', 'wedding-elegant-wedding' ); ?><br>&infin; &ldquo;<?php esc_html_e( 'Infinity', 'wedding-elegant-wedding' ); ?>&rdquo;</em>
+				</p>
 			</div>
-			<p class="wew-kicker"><?php esc_html_e( 'Wedding Invitation', 'wedding-elegant-wedding' ); ?></p>
-			<h2><?php echo esc_html( $names ); ?></h2>
-			<p><?php esc_html_e( 'Satu hari indah, satu cerita baru, dan doa hangat dari orang-orang tersayang.', 'wedding-elegant-wedding' ); ?></p>
-			<button class="wew-open-invitation" type="button" data-wew-open-invitation>
-				<?php esc_html_e( 'Buka Undangan', 'wedding-elegant-wedding' ); ?>
-			</button>
+			<div class="wew-preloader-content">
+				<p class="wew-preloader-kicker"><?php esc_html_e( 'The', 'wedding-elegant-wedding' ); ?> <strong><?php esc_html_e( 'Wedding', 'wedding-elegant-wedding' ); ?></strong> <?php esc_html_e( 'of', 'wedding-elegant-wedding' ); ?></p>
+				<h2><?php echo esc_html( $names ); ?></h2>
+				<p class="wew-preloader-guest">
+					<span><?php esc_html_e( 'Kepada YTH.', 'wedding-elegant-wedding' ); ?></span>
+					<strong><?php echo esc_html( $guest_name ); ?></strong>
+				</p>
+				<button class="wew-open-invitation" type="button" data-wew-open-invitation>
+					<span aria-hidden="true">✉</span>
+					<?php esc_html_e( 'Buka Undangan', 'wedding-elegant-wedding' ); ?>
+				</button>
+			</div>
+			<img class="wew-preloader-flower" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/1_preloader/flower.png' ); ?>" alt="" aria-hidden="true">
 		</div>
 	</div>
 	<?php if ( ! empty( $music_url ) ) : ?>

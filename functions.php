@@ -67,9 +67,16 @@ add_action( 'wp_enqueue_scripts', 'wew_enqueue_assets' );
  */
 function wew_enqueue_assets() {
 	wp_enqueue_style(
+		'wew-google-fonts',
+		'https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&display=block',
+		array(),
+		null
+	);
+
+	wp_enqueue_style(
 		'wew-theme',
 		get_template_directory_uri() . '/assets/css/theme.css',
-		array(),
+		array( 'wew-google-fonts' ),
 		WEW_VERSION
 	);
 
@@ -109,4 +116,3 @@ function wew_boot_github_updater() {
 		new WEW_GitHub_Theme_Updater( WEW_THEME_SLUG, WEW_GITHUB_REPO, WEW_GITHUB_BRANCH );
 	}
 }
-
